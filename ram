@@ -1,0 +1,509 @@
+#!/bin/bash
+
+app="RAM"
+me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DEFAULT_CONF=$DIR/backend/conf/conf-localhost.js
+
+GLOBAL=
+
+# shellcheck disable=SC2068
+for i in ${@:1}
+do
+    if [ $i == '--global' ]
+    then GLOBAL="-g "
+    fi
+done
+
+
+# prerequisites:
+#  brew
+#  git
+#  npm
+# (TESTING: push to test-1)
+
+#  test commit 5 on develop
+
+export PATH=./node_modules/.bin:../node_modules/.bin:$PATH
+
+function echo_and_run {
+  echo "$" "$@"
+  # shellcheck disable=SC2046
+  eval $(printf '%q ' "$@") < /dev/tty
+}
+
+case "$1" in
+
+# SETUP
+
+  'setup')
+    echo ""
+    echo "Setting up local workstation ..."
+    echo ""
+    npm install $GLOBAL typings
+    npm install $GLOBAL gulp
+    npm install $GLOBAL bower
+    echo ""
+    ;;
+
+  'deps')
+    echo ""
+    echo "Downloading dependencies ..."
+    ./$me deps:frontend
+    ./$me deps:backend
+    ./$me deps:test
+    echo ""
+    ;;
+
+  'deps:frontend')
+    echo ""
+    echo "Downloading frontend dependencies ..."
+    echo ""
+    cd frontend
+    rm -rf typings
+    npm install && bower install && typings install && ./node_modules/.bin/jspm install
+    echo ""
+    ;;
+
+  'deps:backend')
+    echo ""
+    echo "Downloading backend dependencies ..."
+    echo ""
+    cd backend
+    rm -rf typings
+    npm install && typings install
+    echo ""
+    ;;
+
+  'deps:test')
+    echo ""
+    echo "Downloading test dependencies ..."
+    echo ""
+    cd tests
+    npm install && typings install
+    echo ""
+    ;;
+
+  'deps:clean')
+    echo ""
+    echo "Cleaning node modules ..."
+    rm -rf backend/node_modules/*
+    rm -rf frontend/node_modules/*
+    rm -rf tests/node_modules/*
+    echo ""
+    echo "Cleaning typings ..."
+    rm -rf backend/typings/*
+    rm -rf frontend/typings/*
+    rm -rf tests/typings/*
+    echo ""
+    echo "Cleaning jspm ..."
+    rm -rf frontend/jspm_packages/*
+    echo ""
+    ;;
+
+  'jspm')
+    echo ""
+    echo "Building jspm dist files"
+    echo ""
+    cd frontend
+    gulp build:jspm
+    echo ""
+    ;;
+
+# FOR DEVELOPMENT
+
+  'feature:start')
+    echo ""
+    echo "Starting a new feature ..."
+    if [ -z "$2" ]; then
+        echo "Please specify a feature name"
+    else
+        echo ""
+        git checkout -b "feature/$2"
+        git push -u origin "feature/$2":"feature/$2"
+    fi
+    echo ""
+    ;;
+
+  'feature:checkout')
+    echo ""
+    echo "Continuing an existing feature ..."
+    if [ -z "$2" ]; then
+        echo "Please specify a feature name"
+    else
+        echo ""
+        git fetch --prune
+        git checkout -b "feature/$2" origin/"feature/$2"
+    fi
+    echo ""
+    ;;
+
+  'feature:finish')
+    echo ""
+    featureName=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+    if [ $featureName ] && [[ $featureName == feature/* ]]; then
+        echo "Finishing feature '$featureName' ..."
+        git push
+        open "http://https://github.com/atogov/RAM/pulls"
+    else
+        echo "Run this from the feature branch"
+    fi
+    echo ""
+    ;;
+
+  'feature:cancel')
+    echo ""
+    featureName=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+    if [ $featureName ] && [[ $featureName == feature/* ]]; then
+        read -p "This will delete the branch '$featureName' on local and origin. Confirm (y/n): " confirm
+        if [ $confirm ] && [ $confirm == "y" ]; then
+            echo ""
+            echo_and_run git checkout develop
+            echo_and_run git branch -D "$featureName"
+            echo_and_run git push origin ":$featureName"
+        fi
+    else
+        echo "Run this from the feature branch"
+    fi
+    echo ""
+    ;;
+
+  'feature:merge:origin')
+    echo ""
+    featureName=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+    if [ $featureName ] && [[ $featureName == feature/* ]]; then
+        echo "Merging from origin/develop to '$featureName' ..."
+        git fetch --prune
+        git merge "origin/develop" $featureName
+    else
+        echo "Run this from the feature branch"
+    fi
+    echo ""
+    ;;
+
+# START
+
+  'start:frontend')
+    echo ""
+    echo "Starting frontend"
+    echo ""
+    cd frontend
+    gulp serve
+    echo ""
+    ;;
+
+  'start:frontend:no-browser-sync')
+    echo ""
+    echo "Starting frontend without using browser-sync"
+    echo ""
+    cd frontend
+    gulp serve:no-browser-sync
+    echo ""
+    ;;
+
+  'start:frontend-no-lint')
+    echo ""
+    echo "Starting frontend"
+    echo ""
+    cd frontend
+    gulp serve --no-lint
+    echo ""
+    ;;
+
+  'start:backend')
+    echo ""
+    cd backend
+    if [ -z "$2" ]; then
+      echo "Starting backend with $DEFAULT_CONF"
+      echo ""
+      RAM_CONF=$DEFAULT_CONF gulp serve
+    else
+      echo "Starting backend with $2"
+      echo ""
+      RAM_CONF="$2" gulp serve
+    fi
+    echo ""
+    ;;
+
+  'start:backend-no-lint')
+    echo ""
+    cd backend
+    if [ -z "$2" ]; then
+      echo "Starting backend with $DEFAULT_CONF"
+      echo ""
+      RAM_CONF=$DEFAULT_CONF gulp serve --no-lint
+    else
+      echo "Starting backend with $2"
+      echo ""
+      RAM_CONF="$2" gulp serve --no-lint
+    fi
+    echo ""
+    ;;
+
+  'debug:backend')
+    echo ""
+    cd backend
+    if [ -z "$2" ]; then
+      echo "Starting backend with $DEFAULT_CONF"
+      echo ""
+      RAM_CONF=$DEFAULT_CONF gulp servedebug --no-lint
+    else
+      echo "Starting backend with $2"
+      echo ""
+      RAM_CONF="$2" gulp servedebug --no-lint
+    fi
+    echo ""
+    ;;
+
+# LINT
+
+  'lint:frontend')
+    echo ""
+    echo "Running ts:lint on frontend"
+    echo ""
+    cd frontend
+    gulp ts:lint
+    echo ""
+    ;;
+
+  'lint:backend')
+    echo ""
+    echo "Running ts:lint on backend"
+    echo ""
+    cd backend
+    gulp ts:lint
+    echo ""
+    ;;
+
+  'lint:tests')
+    echo ""
+    echo "Running ts:lint on tests"
+    echo ""
+    cd tests
+    gulp ts:lint
+    echo ""
+    ;;
+
+# COMPILE
+
+  'compile:frontend')
+    echo ""
+    echo "Running ts:compile on frontend"
+    echo ""
+    cd frontend
+    gulp ts:compile
+    echo ""
+    ;;
+
+  'compile:backend')
+    echo ""
+    echo "Running ts:compile on backend"
+    echo ""
+    cd backend
+    gulp ts:compile
+    echo ""
+    ;;
+
+# TEST
+
+  # run all API tests or, limit to one with --test <test name>
+  # e.g.
+  #     ./ram test:backend --test relationshipType.model
+  'test:backend')
+    echo ""
+    echo "Dropping test database"
+    mongo ram-test --eval "db.dropDatabase()"
+    echo "Starting backend tests"
+    echo ""
+    cd backend
+    if [ -z "$3" ]; then
+      RAM_CONF=$DIR/backend/conf/conf-test.js gulp test
+    else
+      RAM_CONF=$DIR/backend/conf/conf-test.js gulp test "$2" "$3" --no-lint
+    fi
+    exit $?
+    ;;
+
+  # run all API tests or, limit to one with --test <test name>
+  # e.g.
+  #     ./ram test:api --test relationshipType.controller
+  'test:api')
+    echo ""
+    echo "Starting api tests"
+    echo ""
+    cd tests
+    if [ -z "$3" ]; then
+      gulp test
+    else
+      gulp test "$2" "$3" --no-lint
+    fi
+    exit $?
+    ;;
+
+# DB
+
+  'db:seed')
+    echo ""
+    cd backend
+    if [ -z "$2" ]; then
+      echo "Seeding database with $DEFAULT_CONF"
+      echo ""
+      RAM_CONF=$DEFAULT_CONF gulp seed --no-lint
+    else
+      echo "Seeding database with $2"
+      echo ""
+      RAM_CONF="$2" gulp seed --no-lint
+    fi
+    echo ""
+    ;;
+
+  'db:export')
+    echo ""
+    echo "Exporting example data"
+    echo ""
+    cd backend
+    RAM_CONF=$DEFAULT_CONF gulp export --no-lint
+    echo ""
+    ;;
+
+# OTHER
+
+  'chrome')
+    echo ""
+    echo "Opening Chrome in application mode."
+    echo ""
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=http://localhost:3001/#/
+    echo ""
+    ;;
+
+  'clean')
+    echo ""
+    echo "Cleaning all generated files ..."
+    echo ""
+    rm -rf $DIR/frontend/dist
+    rm -rf $DIR/backend/dist
+    rm -rf $DIR/tests/dist
+    echo ""
+    ;;
+
+  'swagger')
+    echo ""
+    echo "Opening browser to swagger apis on local server ..."
+    echo ""
+    open "http://127.0.0.1:3000/api-docs/"
+    echo ""
+    ;;
+
+  'staging')
+    echo ""
+    echo "Opening browser to staging instance ..."
+    echo ""
+    open "http://ramvm01.expoctest.com/#/"
+    echo ""
+    ;;
+
+  'github')
+    echo ""
+    echo "Opening browser to github repository ..."
+    echo ""
+    open "https://github.com/atogov/RAM"
+    echo ""
+    ;;
+
+  'wiki')
+    echo ""
+    echo "Opening browser to github repository ..."
+    echo ""
+    open "https://github.com/atogov/RAM/wiki"
+    echo ""
+    ;;
+
+  'login')
+    echo ""
+    echo "Opening browser to mock login page ..."
+    echo ""
+    open "http://127.0.0.1:3001/dev/"
+    echo ""
+    ;;
+
+  'travis')
+    echo ""
+    echo "Opening Travis continuous integration page ..."
+    echo ""
+    open "https://travis-ci.org/atogov/RAM"
+    echo ""
+    ;;
+
+  'merge:upstream')
+    echo ""
+    echo "Merging from upstream ..."
+    echo ""
+    if [ -z "$2" ]; then
+      echo "Branch not specified!"
+    else
+      echo "Branch: $2"
+      git fetch upstream
+      git merge upstream/$2 $2
+    fi
+    echo ""
+    ;;
+
+  *)
+
+# USAGE
+
+    echo -e ""
+    echo "Usage:"
+    echo ""
+    echo "$(tput setaf 5)    $me$(tput sgr0) $(tput setaf 3)<command>$(tput sgr0)"
+    echo "$(tput sgr0)    Optionally can add --global parameter to perform setup with npm -g flag."
+    echo ""
+    echo "Commands:"
+    echo ""
+    echo "$(tput setaf 3)    setup                                $(tput sgr0)      Setups local workstation"
+    echo "$(tput setaf 3)    deps                                 $(tput sgr0)      Downloads all dependencies"
+    echo "$(tput setaf 3)    deps:frontend                        $(tput sgr0)      Downloads frontend dependencies"
+    echo "$(tput setaf 3)    deps:backend                         $(tput sgr0)      Downloads backend dependencies"
+    echo "$(tput setaf 3)    deps:test                            $(tput sgr0)      Downloads api test dependencies"
+    echo "$(tput setaf 3)    deps:clean                           $(tput sgr0)      Removes node_modules and typings folders"
+    echo "$(tput setaf 3)    jspm                                 $(tput sgr0)      Builds the jspm dist file"
+    echo ""
+    echo "$(tput setaf 3)    feature:start                        $(tput sgr0)      Creates local and remote feature branch"
+    echo "$(tput setaf 3)    feature:checkout                     $(tput sgr0)      Fetches then checks out remote feature branch"
+    echo "$(tput setaf 3)    feature:finish                       $(tput sgr0)      Opens Github to manually submit pull request"
+    echo "$(tput setaf 3)    feature:cancel                       $(tput sgr0)      Deletes local and remote feature branch"
+    echo "$(tput setaf 3)    feature:merge:origin                 $(tput sgr0)      Merges origin/develop to current local feature branch"
+    echo ""
+    echo "$(tput setaf 3)    lint:frontend                        $(tput sgr0)      Runs lint on frontend"
+    echo "$(tput setaf 3)    lint:backend                         $(tput sgr0)      Runs lint on backend"
+    echo "$(tput setaf 3)    lint:tests                           $(tput sgr0)      Runs lint on tests"
+    echo ""
+    echo "$(tput setaf 3)    compile:frontend                     $(tput sgr0)      Runs compile on frontend"
+    echo "$(tput setaf 3)    compile:backend                      $(tput sgr0)      Runs compile on backend"
+    echo ""
+    echo "$(tput setaf 3)    test:backend                         $(tput sgr0)      Runs backend tests"
+    echo "$(tput setaf 3)    test:api                             $(tput sgr0)      Runs API tests"
+    echo ""
+    echo "$(tput setaf 3)    start:frontend                       $(tput sgr0)      Starts local frontend server"
+    echo "$(tput setaf 3)    start:frontend:no-browser-sync       $(tput sgr0)      Starts local frontend server without using browser sync"
+    echo "$(tput setaf 3)    start:backend                        $(tput sgr0)      Starts local backend server"
+    echo "$(tput setaf 3)    start:frontend-no-lint               $(tput sgr0)      Starts local frontend server without linting"
+    echo "$(tput setaf 3)    start:backend-no-lint                $(tput sgr0)      Starts local backend server without linting"
+    echo ""
+    echo "$(tput setaf 3)    debug:backend                        $(tput sgr0)      Starts local backend server without linting and debug port open"
+    echo ""
+    echo "$(tput setaf 3)    db:seed                              $(tput sgr0)      Seeds local database"
+    echo "$(tput setaf 3)    db:export                            $(tput sgr0)      Exports example data from local database"
+    echo ""
+    echo "$(tput setaf 3)    chrome                               $(tput sgr0)      Opens chrome in application mode"
+    echo "$(tput setaf 3)    clean                                $(tput sgr0)      Cleans all generated files"
+    echo "$(tput setaf 3)    swagger                              $(tput sgr0)      Opens browser to swagger apis on local server"
+    echo "$(tput setaf 3)    staging                              $(tput sgr0)      Opens browser to staging instance"
+    echo "$(tput setaf 3)    github                               $(tput sgr0)      Opens browser to github repository"
+    echo "$(tput setaf 3)    wiki                                 $(tput sgr0)      Opens browser to project wiki"
+    echo "$(tput setaf 3)    merge:upstream <branch>              $(tput sgr0)      Merges from upstream, <value> is branch name (eg develop)"
+    echo ""
+    ;;
+
+esac

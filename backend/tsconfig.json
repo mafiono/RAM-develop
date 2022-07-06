@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "target": "es6",
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "inlineSources": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "../dist/js",
+        "module": "commonjs"
+    },
+    "compileOnSave": true,
+    "files": [
+        "typescript/server.ts",
+        "typings/index.d.ts"
+    ],
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/node_modules/**": true,
+        "**/jspm_packages/**": true
+    }
+}

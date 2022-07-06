@@ -1,0 +1,24 @@
+{
+  "name": "test-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "codelyzer": "0.0.19",
+    "faker": "^3.1.0",
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.3.0",
+    "gulp-tslint": "^4.3.5",
+    "gulp-typescript": "^2.13.0",
+    "gulp-util": "^3.0.7",
+    "jasmine": "^2.4.1",
+    "superagent": "latest",
+    "tslint": "latest",
+    "tslint-microsoft-contrib": "latest",
+    "typescript": "latest",
+    "typings": "^1.0.0",
+    "urijs": "^1.17.1",
+    "url": "^0.11.0",
+    "yargs": "^4.7.1"
+  }
+}

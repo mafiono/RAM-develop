@@ -1,0 +1,9 @@
+{
+  "globalDependencies": {
+    "faker": "registry:dt/faker#0.0.0+20160406111603",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
+    "node": "registry:dt/node#4.0.0+20160330064709",
+    "superagent": "registry:dt/superagent#1.4.0+20160317120654",
+    "urijs": "registry:dt/urijs#1.15.1+20160326065022"
+  }
+}

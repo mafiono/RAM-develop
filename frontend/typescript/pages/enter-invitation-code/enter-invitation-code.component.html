@@ -1,0 +1,19 @@
+<page-header [identity]="identity"
+             tab="GET_AUTHORISATION"
+             [messages]="globalMessages"></page-header>
+
+<h4>{{'acceptRelationship.enterAuthCode' | translate}}</h4>
+
+<br/>
+
+<form class="form-horizontal" [formGroup]='form'>
+    <div class="form-group">
+        <div class="col-lg-8" [class.has-error]="!form.controls['relationshipCode'].valid">
+            <input type="text" class="form-control" placeholder="Authorisation code ..." [formControl]='form.controls["relationshipCode"]'>
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-primary col-lg-12" (click)="activateCode($event)"
+            [disabled]='!form.valid'>Activate</button>
+        </div>
+    </div>
+</form>

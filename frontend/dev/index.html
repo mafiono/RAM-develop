@@ -1,0 +1,493 @@
+<!-- THIS IS A DEVELOPMENT ONLY PAGE PROVIDING A CONVENIENT WAY TO LOG IN AS TEST USERS -->
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/log4javascript/1.4.9/log4javascript.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <style>
+
+        .list-group input[type="text"] {
+            border: 0;
+            background: #f0f0f0;
+            padding: 0 5px;
+        }
+
+        #user-list {
+            overflow: scroll;
+        }
+
+        #user-list ul li {
+            cursor: pointer;
+        }
+
+        #user-list ul li span {
+            color: #ccc;
+        }
+
+        #user-list ul li .label {
+            color: #fff;
+            font-weight: normal;
+            margin-top: 0;
+            padding: 5px 7px;
+        }
+
+        #user-list .list-group-item.active, #user-list .list-group-item.active:focus, #user-list .list-group-item.active:hover {
+            color: #000;
+            background: #e8e8e8;
+            border: 1px solid #e8e8e8;
+        }
+
+        #user-detail {
+            text-align: center;
+        }
+
+        #user-detail .glyphicon {
+            font-size: 75px;
+        }
+
+        #user-detail table {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        #user-detail table td:first-child {
+            white-space: nowrap;
+        }
+
+        #user-detail table td {
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .disabled {
+            opacity: 0.5;
+        }
+
+        .dont-break-out {
+
+            /* These are technically the same, but use both */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+
+            -ms-word-break: break-all;
+            /* This is the dangerous one in WebKit, as it breaks things wherever */
+            word-break: break-all;
+            /* Instead use this non-standard one: */
+            word-break: break-word;
+
+            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2 class="animated bounce">RAM Developers Console</h2>
+
+    <p>Please select a regular user or agency user from the list below to simulate logging in as that user:</p>
+    <p>&nbsp;</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="user-list">
+                <ul class="list-group">
+                    <li class="list-group-item" data-id="">
+                        ABN header : <input id="abn" type="text"/>
+                        <span class="pull-right">
+                            <a href="#" onclick="removeABNCookie(); return false">Remove ABN cookie</a>
+                        </span>
+                    </ul>
+                </ul>
+                <div>
+                </div>
+                <ul class="list-group identities">
+                </ul>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUser">
+                New Regular User
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTransactRequest">
+                New Transact Request
+            </button>
+        </div>
+        <div id="user-detail" class="col-md-6">
+            <div class="panel panel-default container-fluid">
+                <div class="panel-heading row"><b>User Details</b></div>
+                <div class="panel-body">
+                    <h2 id="not-logged-in">Not Logged In</h2>
+                    <table class="table dont-break-out"></table>
+                </div>
+                <div class="panel-footer row">
+                    <a href="/" target="_blank" class="btn btn-primary" id="launch">Launch RAM</a>
+                    <a href="#" class="btn btn-default" id="logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--New Regular User-->
+    <div class="modal fade" id="newUser" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+                    <h4 class="modal-title">New User</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Use this to simulate ANY user coming via an external authentication mechanism
+                        and hitting RAM. For example, to create a new individual log in - with the correct
+                        headers, the identity will be created in the RAM database.</p>
+                    <div class="headers-container"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="headers-send-button">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--New Transact Request-->
+    <div class="modal fade" id="newTransactRequest" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+                    <h4 class="modal-title">New User</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Use this to simulate ANY transact request coming via an external relying software and hitting RAM.
+                        The request is expected to contain a mixture of headers and request body parameters.</p>
+                    <div class="headers-container">
+                        <div class="form-group form-group-sm">
+                            <label>OSP AUSkey</label>
+                            <input class="form-control input-sm" id="transact-auskey" value="10000000001-DEVICE-2"/>
+                        </div>
+                    </div>
+                    <div class="headers-container">
+                        <div class="form-group form-group-sm">
+                            <label>OSP ABN</label>
+                            <input class="form-control input-sm" id="transact-abn" value="10000000001"/>
+                        </div>
+                    </div>
+                    <div class="headers-container">
+                        <div class="form-group form-group-sm">
+                            <label>Client ABN</label>
+                            <input class="form-control input-sm" id="transact-clientabn" value="00000000001"/>
+                        </div>
+                    </div>
+                    <div class="headers-container">
+                        <div class="form-group form-group-sm">
+                            <label>Client SSID</label>
+                            <input class="form-control input-sm" id="transact-clientssid" value="mySSID-1234"/>
+                        </div>
+                    </div>
+                    <div class="headers-container">
+                        <div class="form-group form-group-sm">
+                            <label>Client Agency Service</label>
+                            <input class="form-control input-sm" id="transact-clientagencyservice" value="USI"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="transact-send-button">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function removeABNCookie() {
+            document.cookie = 'x-ram-abn=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            $('#abn').val('');
+            alert('Removed x-ram-abn cookie');
+        }
+
+        $(function () {
+
+            var X_RAM_HEADERS_FOR_ADDING = {
+
+                'x-ram-identitytype': 'LINK_ID',
+                'x-ram-identitystrength': '1',
+                'x-ram-partytype': 'INDIVIDUAL',
+
+                'x-ram-givenname': 'Homer',
+                'x-ram-familyname': 'Simpson',
+                'x-ram-unstructuredname': null,
+                'x-ram-dob': '31/01/2000',
+
+                'x-ram-profileprovider': 'MY_GOV',
+                'x-ram-abn': null,
+
+                'x-ram-agencyscheme': null,
+                'x-ram-agencytoken': null,
+                'x-ram-linkidscheme': 'MY_GOV',
+                'x-ram-linkidconsumer': null,
+                'x-ram-publicidentifierscheme': null
+
+            };
+
+            var $identities = $('.identities');
+
+            function getId() {
+                return [$('#x-ram-givenname').val(), $('#x-ram-familyname').val()].join('_').trim();
+            }
+
+            function getIdValue() {
+                return [$('#x-ram-identitytype').val(), $('#x-ram-profileprovider').val(), getId()].join(':').trim();
+            }
+
+            function refreshIdentitiesAndAgencyUsers() {
+
+                // identities
+                $.get('/api/v1/identities?page=1', function (data) {
+
+                    // empty
+                    $identities.empty();
+
+                    // populate
+                    for (var i = 0; i < data.list.length; i++) {
+                        // eg. <li class="list-group-item" data-id="LINK_ID:MY_GOV:jennifermaxims_identity_1">Jennifer Maxims</li>
+                        var item = data.list[i];
+                        if (item.value.identityType === 'LINK_ID' && item.value.rawIdValue.slice(0,9) !== 'zoezombie') {
+                            var $li = $('<li></li>')
+                                    .addClass('list-group-item')
+                                    .addClass('regular-user')
+                                    .data('id', item.value.idValue)
+                                    .text(item.value.profile.name._displayName)
+                                    .append($('<span/>').addClass('pull-right label label-success').text('Regular User'))
+                                    .append($('<span/>').addClass('pull-right label label-warning').css('margin-right', '15px').text('Strength ' + item.value.strength))
+                                    .append($('<span/>').addClass('pull-right label label-default').css('margin-right', '15px').text(item.value.identityType.replace('_', ' ')));
+                            $identities.append($li);
+                        }
+                    }
+
+                    // details
+                    refreshPrincipalDetails();
+
+                    // select user
+                    $('#user-list').find('li').click(function () {
+                        var identity = $(this).data('id');
+                        logIn(identity);
+                    });
+
+                    // agency users
+                    $.get('/api/v1/agencyUsers', function (data) {
+
+                        // populate
+                        for (var i = 0; i < data.length; i++) {
+                            // eg. <li class="list-group-item" data-id="ted_agent">Jennifer Maxims</li>
+                            var item = data[i];
+                            var $li = $('<li></li>')
+                                    .addClass('list-group-item')
+                                    .addClass('agency-user')
+                                    .data('id', item.id)
+                                    .text(item.displayName)
+                                    .append($('<span/>').addClass('pull-right label label-info').text('Agency User'));
+                            $identities.append($li);
+                        }
+
+                        // details
+                        refreshPrincipalDetails();
+
+                        // select user
+                        $('#user-list').find('li').click(function () {
+                            var identity = $(this).data('id');
+                            logIn(identity);
+                        });
+
+
+
+                    });
+
+                });
+
+            }
+
+            function logout() {
+                logIn(undefined);
+            }
+
+            function logIn(credentials) {
+                //log.debug('Logging in with credentials ', credentials);
+                var ajaxReq = {
+                    url: '/api/v1/simulators/authenticator/authenticate',
+                    type: 'post',
+                    data: {credentials: credentials}
+                };
+
+                var abn = $('#abn').val();
+                if (abn) {
+                    log.debug('Adding ABN as header x-ram-abn:', abn);
+                    ajaxReq.headers = {'x-ram-abn':abn};
+                }
+
+                $.ajax(ajaxReq).always(function () {
+                    refreshPrincipalDetails();
+                });
+            }
+
+            function refreshPrincipalDetails() {
+
+                var identity_id_value_header = 'x-ram-identity-idvalue';
+                var agency_login_id_value_header = 'x-ram-agencyuser-loginid';
+
+                var effect = 'rubberBand';
+                var $userDetail = $('#user-detail');
+                var $userList = $('#user-list');
+                var $notLoggedIn = $('#not-logged-in');
+
+                $userDetail.removeClass(effect);
+                // spm: added dummy parameter to foil caching
+                $.get('/api/v1/simulators/authenticator/locals',
+                {"_": $.now()},
+                function (data) {
+
+                    // clean up state
+                    $userDetail.find('table tr').remove();
+                    $userDetail.find('.glyphicon').addClass('disabled');
+                    $userList.find('li').removeClass('active');
+
+                    if (Object.keys(data).length > 0) {
+
+                        // display login details
+                        $notLoggedIn.hide();
+                        $userDetail.find('.glyphicon').removeClass('disabled');
+                        for (var key in data) {
+                            $userDetail.find('table').append('<tr><td>' + key + '</td><td>' + data[key] + '</td></tr>');
+                        }
+
+                        // pick id to use
+                        var id = data[agency_login_id_value_header] ? data[agency_login_id_value_header] : data[identity_id_value_header];
+
+                        // highlight logged in user
+                        $userList.find('li').each(function (index) {
+                            if ($(this).data('id') == id) {
+                                $(this).addClass('active');
+                            }
+                        });
+
+                    }
+                    else {
+                        // not logged in
+                        $notLoggedIn.show();
+                    }
+
+                    log.debug('updated');
+                    $userDetail.addClass(effect);
+
+                });
+
+            }
+
+            var log = log4javascript.getLogger('my_logger');
+            var consoleAppender = new log4javascript.BrowserConsoleAppender();
+            log.addAppender(consoleAppender);
+
+            // construct add new user form
+            $.each(X_RAM_HEADERS_FOR_ADDING, function (key, value) {
+                $('#newUser .headers-container').append('<div class="form-group form-group-sm"><label>' +
+                        key +
+                        '</label><input  class="form-control input-sm" id="' +
+                        key +
+                        '" value="' +
+                        (X_RAM_HEADERS_FOR_ADDING[key] ? X_RAM_HEADERS_FOR_ADDING[key] : '') +
+                        '"/></div>');
+            });
+
+            // add new user
+            $('#headers-send-button').click(function () {
+                window.setTimeout(function () {
+                    // log out first
+                    $.post('/api/v1/simulators/authenticator/authenticate', {credentials: null}, function (data) {
+                    }).always(function () {
+                        // send any request with headers so identity gets created
+                        $.ajax({
+                            url: "/api/v1/simulators/authenticator/authenticate",
+                            type: "POST",
+                            beforeSend: function (request) {
+                                var id = getId();
+                                var idValue = getIdValue();
+                                log.debug('Sending header for idValue ', idValue);
+                                $.each(X_RAM_HEADERS_FOR_ADDING, function (key, value) {
+                                    var headerValue = $('#' + key).val();
+                                    if (headerValue) {
+                                        request.setRequestHeader(key, headerValue);
+                                    }
+                                });
+                                request.setRequestHeader('x-ram-identity-rawidvalue', id);
+                                request.setRequestHeader('x-ram-identity-idvalue', idValue);
+                            },
+                            processData: false,
+                            complete: function (msg) {
+                                // now refresh and log in as the new user as a convenience
+                                refreshIdentitiesAndAgencyUsers();
+                                logIn(getIdValue());
+                            }
+                        });
+                    }, 1000);
+                });
+            });
+
+            // transact
+            $('#transact-send-button').click(function () {
+                var requestData = {
+                    clientABN: $('#transact-clientabn').val(),
+                    ssid: $('#transact-clientssid').val(),
+                    agencyService: $('#transact-clientagencyservice').val()
+                };
+                $.ajax({
+                    url: '/api/v1/transact/allowed',
+                    type: 'POST',
+                    data: requestData,
+                    beforeSend: function (request) {
+                        request.setRequestHeader('x-ram-auth-auskey', $('#transact-auskey').val());
+                        request.setRequestHeader('x-ram-abn', $('#transact-abn').val());
+                    }
+                })
+                        .done(function (data) {
+                            alert('Transact Result: ' + data.allowed);
+                        })
+                        .fail(function (jqXHR) {
+                            var data = jqXHR.responseJSON;
+                            alert(data.alert.messages[0]);
+                        });
+            });
+
+            // logout
+            $('#logout').click(function () {
+                logout();
+            });
+
+            refreshIdentitiesAndAgencyUsers();
+
+        });
+
+    </script>
+
+    <hr/>
+
+</div>
+
+</body>
+
+</html>

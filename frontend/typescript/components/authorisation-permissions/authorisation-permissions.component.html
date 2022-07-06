@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><span class="badge square">4</span> Set Access levels</h4></div>
+    <div *ngIf="data.enabled" class="panel-body">
+        <div class="col-md-12">
+            <h4>Set access levels to online government services</h4>
+        </div>
+        <div class="col-md-12">
+            <h4>Access levels:</h4>
+            <blockquote>
+                <p>
+                    {{data.accessLevelsDescription.attributeNameDef.value.longDecodeText}}
+                </p>
+            </blockquote>
+        </div>
+        <div class="col-md-12">
+            <div class="pull-right">
+                <h4 *ngIf="data.customisationEnabled">Individually set the below online government services</h4>
+                <h4 *ngIf="!data.customisationEnabled">Full Access is granted for all online government services</h4>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table checkbox-table">
+                <tbody>
+                    <tr *ngFor="let permissionAttribute of permissionAttributes">
+                        <td class="col-md-8 vmiddle">
+                            {{permissionAttribute.attributeName.value.shortDecodeText}}
+                        </td>
+                        <td class="col-md-4 vmiddle">
+                            <div class="pull-right">
+                                <button *ngFor="let permittedValue of permissionAttribute.attributeName.value.permittedValues"
+                                        [disabled]='(!data.customisationEnabled)'
+                                        class="btn"
+                                        [class.btn-secondary]="permissionAttribute.value.length > 0 && permissionAttribute.value[0] === permittedValue"
+                                        [class.btn-inverse]="permissionAttribute.value.length == 0 || permissionAttribute.value[0] !== permittedValue"
+                                        (click)="toggle(permissionAttribute, permittedValue)"> {{permittedValue}}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

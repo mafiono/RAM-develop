@@ -1,0 +1,1725 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RAM",
+		"_postman_id": "f2f2beb2-1ea1-203a-4830-86d522a7f289",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Agency User",
+			"description": "",
+			"item": [
+				{
+					"name": "Get (me)",
+					"request": {
+						"url": "{{host}}/api/v1/agencyUser/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Search (NON-PROD)",
+					"request": {
+						"url": "{{host}}/api/v1/agencyUsers",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aus Key",
+			"description": "",
+			"item": [
+				{
+					"name": "List AUSkeys (Jen's Catering)",
+					"request": {
+						"url": "{{host}}/api/v1/auskeys/identity/PUBLIC_IDENTIFIER:ABN:00000000001?page=1&filter=auskeyType%3DDEVICE",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List AUSkeys (EdTech)",
+					"request": {
+						"url": "{{host}}/api/v1/auskeys/identity/PUBLIC_IDENTIFIER:ABN:10000000001?page=1&filter=auskeyType%3DDEVICE",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find AUSkey (EdTech)",
+					"request": {
+						"url": "{{host}}/api/v1/auskey/10000000001-DEVICE-1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"description": "",
+			"item": [
+				{
+					"name": "Show User Details",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/locals",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate (bad)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Identity (Jennifer Maxims)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Identity (Bob Smith)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:bobsmith_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate New Identity (Fred Johnson)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-Identity-IdValue",
+								"value": "LINK_ID:MY_GOV:fredjohnson_identity_xxx",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-Identity-RawIdValue",
+								"value": "fredjohnson_identity_xxx",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-PartyType",
+								"value": "INDIVIDUAL",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-GivenName",
+								"value": "Fred",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-FamilyName",
+								"value": "Johnson",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-DOB",
+								"value": "01/01/2000",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-IdentityType",
+								"value": "LINK_ID",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-IdentityStrength",
+								"value": "1",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ProfileProvider",
+								"value": "MY_GOV",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-LinkIdScheme",
+								"value": "MY_GOV",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AgencyScheme",
+								"value": "",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-PublicIdentifierScheme",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:fredjohnson_identity_xxx",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Agency User (Ted Agent)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "ted_agent",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Agency User (Max Agent)",
+					"request": {
+						"url": "{{host}}/api/v1/simulators/authenticator/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "max_agent",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Business",
+			"description": "",
+			"item": [
+				{
+					"name": "Get By ABN (Peaceful Gardens)",
+					"request": {
+						"url": "{{host}}/api/v1/business/abn/14126318518",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Register By ABN (Peaceful Gardens)",
+					"request": {
+						"url": "{{host}}/api/v1/business/register/14126318518/Peaceful Gardens Organic Cooking School Ltd.",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"description": "",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"url": "{{host}}/api/v1/identities?page=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Bad)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/bad",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (me)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Jen's Catering Pty Ltd)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/PUBLIC_IDENTIFIER:ABN:00000000001",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Jennifer Maxims)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/LINK_ID:MY_GOV:jennifermaxims_identity_1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Bob Smith)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/LINK_ID:MY_GOV:bobsmith_identity_1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Invitation Code (bad)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/invitationCode/bad",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Invitation Code (jEVYNX)",
+					"request": {
+						"url": "{{host}}/api/v1/identity/invitationCode/jEVYNX",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Party",
+			"description": "",
+			"item": [
+				{
+					"name": "Get (Bad)",
+					"request": {
+						"url": "{{host}}/api/v1/party/identity/bad",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (me)",
+					"request": {
+						"url": "{{host}}/api/v1/party/identity/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Jen's Catering Pty Ltd)",
+					"request": {
+						"url": "{{host}}/api/v1/party/identity/PUBLIC_IDENTIFIER:ABN:00000000001",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Jennifer Maxims)",
+					"request": {
+						"url": "{{host}}/api/v1/party/identity/LINK_ID:MY_GOV:jennifermaxims_identity_1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Bob Smith)",
+					"request": {
+						"url": "{{host}}/api/v1/party/identity/LINK_ID:MY_GOV:bobsmith_identity_1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List types",
+					"request": {
+						"url": "{{host}}/api/v1/partyTypes",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get type (INDIVIDUAL)",
+					"request": {
+						"url": "{{host}}/api/v1/partyType/INDIVIDUAL",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Principal",
+			"description": "",
+			"item": [
+				{
+					"name": "Get (me)",
+					"request": {
+						"url": "{{host}}/api/v1/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"description": "",
+			"item": [
+				{
+					"name": "List profile providers",
+					"request": {
+						"url": "{{host}}/api/v1/profileProviders",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get profile provider (MY_GOV)",
+					"request": {
+						"url": "{{host}}/api/v1/profileProvider/MY_GOV",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relationship",
+			"description": "",
+			"item": [
+				{
+					"name": "List by subject",
+					"request": {
+						"url": "{{host}}/api/v1/relationships/subject/identity/PUBLIC_IDENTIFIER:ABN:00000000001?page=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List by delegate",
+					"request": {
+						"url": "{{host}}/api/v1/relationships/delegate/identity/LINK_ID:MY_GOV:jennifermaxims_identity_1?page=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List distinct subjects",
+					"request": {
+						"url": "{{host}}/api/v1/relationships/identity/subjects?filter=text%3Djen%26sort%3Dasc%26partyType%3DABN%26authorisationManagement%3Dtrue&page=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/575fe8a6cb1427cc82a924cf",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Invitation Code (bad)",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/bad",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Invitation Code (jEVYNX)",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/jEVYNX",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept By Invitation Code (jEVYNX)",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/jEVYNX/accept",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notify Delegate By Invitation Code (jEVYNX)",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/jEVYNX/notifyDelegate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\"\n}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject By Invitation Code (jEVYNX)",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/jEVYNX/reject",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List statuses",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipStatuses",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get status (ACTIVE)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipStatus/ACTIVE",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create by invitation code",
+					"request": {
+						"url": "{{host}}/api/v1/relationship",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"relationshipType\": {\n        \"href\": \"/api/v1/relationshipType/UNIVERSAL_REPRESENTATIVE\"\n    },\n    \"subject\": {\n        \"href\": \"/api/v1/party/identity/PUBLIC_IDENTIFIER%3AABN%3A00000000001\"\n    },\n    \"delegate\": {\n        \"value\": {\n            \"_links\": [\n            ],\n            \"partyType\": \"INDIVIDUAL\",\n            \"identities\": [\n                {\n                    \"href\": \"\",\n                    \"value\": {\n                        \"_links\": [\n                        ],\n                        \"identityType\": \"INVITATION_CODE\",\n                        \"defaultInd\": true,\n                        \"profile\": {\n                            \"provider\": \"INVITATION\",\n                            \"name\": {\n                                \"givenName\": \"Bob\",\n                                \"familyName\": \"Smith\"\n                            },\n                            \"sharedSecrets\": [ {\n                                \"value\": \"2000-01-01\",\n                                \"sharedSecretType\": {\n                                    \"code\": \"DATE_OF_BIRTH\"\n                                }\n                            }]\n                        }\n                    }\n                }\n            ]\n        }\n    },\n    \"startTimestamp\": \"2016-08-28T14:00:00.000Z\",\n    \"status\": \"ACCEPTED\",\n    \"initiatedBy\": \"SUBJECT\",\n    \"attributes\": [\n        {\n            \"value\": [\n                \"true\"\n            ],\n            \"attributeName\": {\n                \"href\": \"/api/v1/relationshipAttributeName/PERMISSION_CUSTOMISATION_ALLOWED_IND\",\n                \"value\": {\n                    \"code\": \"PERMISSION_CUSTOMISATION_ALLOWED_IND\",\n                    \"shortDecodeText\": \"Permission Customisation Allowed Indicator\",\n                    \"longDecodeText\": \"Permission Customisation Allowed Indicator\",\n                    \"startTimestamp\": \"2016-08-28T14:00:00.000Z\",\n                    \"name\": \"Permission Customisation Allowed Indicator\",\n                    \"domain\": \"BOOLEAN\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        },\n        {\n            \"value\": [\n                \"true\"\n            ],\n            \"attributeName\": {\n                \"href\": \"/api/v1/relationshipAttributeName/DELEGATE_MANAGE_AUTHORISATION_ALLOWED_IND\",\n                \"value\": {\n                    \"code\": \"DELEGATE_MANAGE_AUTHORISATION_ALLOWED_IND\",\n                    \"shortDecodeText\": \"Do you want this representative to manage authorisations for this organisation?\",\n                    \"longDecodeText\": \"(This includes the ability to create, view, modify and cancel authorisations)\",\n                    \"startTimestamp\": \"2016-08-28T14:00:00.000Z\",\n                    \"name\": \"Do you want this representative to manage authorisations for this organisation?\",\n                    \"domain\": \"BOOLEAN\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        },\n        {\n            \"value\": [\n                \"true\"\n            ],\n            \"attributeName\": {\n                \"href\": \"/api/v1/relationshipAttributeName/DELEGATE_RELATIONSHIP_TYPE_DECLARATION\",\n                \"value\": {\n                    \"code\": \"DELEGATE_RELATIONSHIP_TYPE_DECLARATION\",\n                    \"shortDecodeText\": \"Delegate Relationship Type Declaration\",\n                    \"longDecodeText\": \"Delegate Relationship Type Declaration\",\n                    \"startTimestamp\": \"2016-08-28T14:00:00.000Z\",\n                    \"name\": \"Delegate Relationship Type Declaration\",\n                    \"domain\": \"MARKDOWN\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        },\n        {\n            \"value\": [\n                \"true\"\n            ],\n            \"attributeName\": {\n                \"href\": \"/api/v1/relationshipAttributeName/SUBJECT_RELATIONSHIP_TYPE_DECLARATION\",\n                \"value\": {\n                    \"code\": \"SUBJECT_RELATIONSHIP_TYPE_DECLARATION\",\n                    \"shortDecodeText\": \"Subject Relationship Type Declaration\",\n                    \"longDecodeText\": \"Subject Relationship Type Declaration\",\n                    \"startTimestamp\": \"2016-08-28T14:00:00.000Z\",\n                    \"name\": \"Subject Relationship Type Declaration\",\n                    \"domain\": \"MARKDOWN\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        }\n    ]\n}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Claim By Invitation Code",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/{{invitationCode}}/claim",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept By Invitation Code",
+					"request": {
+						"url": "{{host}}/api/v1/relationship/invitationCode/{{invitationCode}}/accept",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relationship Attribute Names",
+			"description": "",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipAttributeNames",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Bad)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipAttributeName/bad",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Delegate Declaration)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipAttributeName/DELEGATE_RELATIONSHIP_TYPE_DECLARATION",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relationship Type",
+			"description": "",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipTypes",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Bad)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipType/bad",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Universal)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipType/UNIVERSAL_REPRESENTATIVE",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get (Custom)",
+					"request": {
+						"url": "{{host}}/api/v1/relationshipType/CUSTOM_REPRESENTATIVE",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "credentials",
+									"value": "LINK_ID:MY_GOV:jennifermaxims_identity_1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"description": "",
+			"item": [
+				{
+					"name": "List roles (Jen's Catering)",
+					"request": {
+						"url": "{{host}}/api/v1/roles/identity/PUBLIC_IDENTIFIER:ABN:00000000001?page=1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "List roles"
+					},
+					"response": []
+				},
+				{
+					"name": "List roles (EdTech)",
+					"request": {
+						"url": "{{host}}/api/v1/roles/identity/PUBLIC_IDENTIFIER:ABN:10000000001?page=1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "List roles"
+					},
+					"response": []
+				},
+				{
+					"name": "List roles (EdTech, OSP, Active)",
+					"request": {
+						"url": "{{host}}/api/v1/roles/identity/PUBLIC_IDENTIFIER:ABN:10000000001?filter=roleType%3DOSP%26status%3DACTIVE&page=1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "List roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Save role",
+					"request": {
+						"url": "{{host}}/api/v1/role",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_links\": [],\n    \"code\": null,\n    \"roleType\": {\n        \"href\": \"/api/v1/roleType/OSP\",\n        \"value\": {\n            \"code\": \"OSP\",\n            \"shortDecodeText\": \"Online Software Provider\",\n            \"longDecodeText\": \"Online Software Provider\",\n            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n            \"roleAttributeNames\": [\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/SSID\",\n                        \"value\": {\n                            \"code\": \"SSID\",\n                            \"shortDecodeText\": \"SSID\",\n                            \"longDecodeText\": \"Software serial number\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"SSID\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/USI\",\n                        \"value\": {\n                            \"code\": \"USI\",\n                            \"shortDecodeText\": \"Unique Student Identifier (USI)\",\n                            \"longDecodeText\": \"Unique Student Identifier (USI)\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Unique Student Identifier (USI)\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"AGENCY_SERVICE\",\n                            \"category\": \"EDUCATION\",\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/SBR\",\n                        \"value\": {\n                            \"code\": \"SBR\",\n                            \"shortDecodeText\": \"Standard Business Reporting (SBR) - ATO\",\n                            \"longDecodeText\": \"Standard Business Reporting (SBR) - ATO\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Standard Business Reporting (SBR) - ATO\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"AGENCY_SERVICE\",\n                            \"category\": \"TAX\",\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/PREFERRED_NAME\",\n                        \"value\": {\n                            \"code\": \"PREFERRED_NAME\",\n                            \"shortDecodeText\": \"Preferred Name\",\n                            \"longDecodeText\": \"Preferred Name\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Preferred Name\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/CREATOR_ID\",\n                        \"value\": {\n                            \"code\": \"CREATOR_ID\",\n                            \"shortDecodeText\": \"Creator Id\",\n                            \"longDecodeText\": \"Creator Id\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Creator Id\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/CREATOR_NAME\",\n                        \"value\": {\n                            \"code\": \"CREATOR_NAME\",\n                            \"shortDecodeText\": \"Creator Name\",\n                            \"longDecodeText\": \"Creator Name\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Creator Name\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/CREATOR_AGENCY\",\n                        \"value\": {\n                            \"code\": \"CREATOR_AGENCY\",\n                            \"shortDecodeText\": \"Creator Agency\",\n                            \"longDecodeText\": \"Creator Agency\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Creator Agency\",\n                            \"domain\": \"STRING\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                },\n                {\n                    \"optionalInd\": false,\n                    \"defaultValue\": null,\n                    \"attributeNameDef\": {\n                        \"href\": \"/api/v1/roleAttributeName/DEVICE_AUSKEYS\",\n                        \"value\": {\n                            \"code\": \"DEVICE_AUSKEYS\",\n                            \"shortDecodeText\": \"Device Auskeys\",\n                            \"longDecodeText\": \"Device Auskeys\",\n                            \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                            \"name\": \"Device Auskeys\",\n                            \"domain\": \"SELECT_MULTI\",\n                            \"classifier\": \"OTHER\",\n                            \"category\": null,\n                            \"permittedValues\": []\n                        }\n                    }\n                }\n            ]\n        }\n    },\n    \"party\": {\n        \"href\": \"/api/v1/party/identity/PUBLIC_IDENTIFIER%3AABN%3A14126318518\"\n    },\n    \"startTimestamp\": \"2016-08-10T11:37:22.068Z\",\n    \"endTimestamp\": null,\n    \"endEventTimestamp\": null,\n    \"assignedTimestamp\": \"2016-08-10T11:37:22.068Z\",\n    \"status\": \"ACTIVE\",\n    \"attributes\": [\n        {\n            \"value\": \"asd\",\n            \"attributeName\": {\n                \"href\": \"/api/v1/roleAttributeName/PREFERRED_NAME\",\n                \"value\": {\n                    \"code\": \"PREFERRED_NAME\",\n                    \"shortDecodeText\": \"Preferred Name\",\n                    \"longDecodeText\": \"Preferred Name\",\n                    \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                    \"name\": \"Preferred Name\",\n                    \"domain\": \"STRING\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        },\n        {\n            \"value\": [\n                \"14126318518-DEVICE-1\"\n            ],\n            \"attributeName\": {\n                \"href\": \"/api/v1/roleAttributeName/DEVICE_AUSKEYS\",\n                \"value\": {\n                    \"code\": \"DEVICE_AUSKEYS\",\n                    \"shortDecodeText\": \"Device Auskeys\",\n                    \"longDecodeText\": \"Device Auskeys\",\n                    \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                    \"name\": \"Device Auskeys\",\n                    \"domain\": \"SELECT_MULTI\",\n                    \"classifier\": \"OTHER\",\n                    \"category\": null,\n                    \"permittedValues\": []\n                }\n            }\n        },\n        {\n            \"value\": \"true\",\n            \"attributeName\": {\n                \"href\": \"/api/v1/roleAttributeName/USI\",\n                \"value\": {\n                    \"code\": \"USI\",\n                    \"shortDecodeText\": \"Unique Student Identifier (USI)\",\n                    \"longDecodeText\": \"Unique Student Identifier (USI)\",\n                    \"startTimestamp\": \"2016-08-10T06:00:41.955Z\",\n                    \"name\": \"Unique Student Identifier (USI)\",\n                    \"domain\": \"STRING\",\n                    \"classifier\": \"AGENCY_SERVICE\",\n                    \"category\": \"EDUCATION\",\n                    \"permittedValues\": []\n                }\n            }\n        }\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List role statuses",
+					"request": {
+						"url": "{{host}}/api/v1/roleStatuses",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role Type",
+			"description": "",
+			"item": [
+				{
+					"name": "Get a role type",
+					"request": {
+						"url": "{{host}}/api/v1/roleType/OSP",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List role types",
+					"request": {
+						"url": "{{host}}/api/v1/roleTypes",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System",
+			"description": "",
+			"item": [
+				{
+					"name": "Health check - shallow",
+					"request": {
+						"url": "{{host}}/system/healthcheck/shallow",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Health check - deep",
+					"request": {
+						"url": "{{host}}/system/healthcheck/deep",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transact",
+			"description": "",
+			"item": [
+				{
+					"name": "Transact (Jen's Catering Pty Ltd / Ed Tech OSP Pty Ltd)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "10000000001-DEVICE-2",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "10000000001",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (missing auth)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (bad device auskey)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "__bogus__",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "10000000001",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (bad osp abn)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "10000000001-DEVICE-2",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "__bogus__",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (bad client abn)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "10000000001-DEVICE-2",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "10000000001",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"__bogus__\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (bad agency service)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "10000000001-DEVICE-2",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "10000000001",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"mySSID-1234\",\n    \"agencyService\": \"__bogus__\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Transact (bad ssid)",
+					"request": {
+						"url": "{{host}}/api/v1/transact/allowed",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-AUTH-AUSKEY",
+								"value": "10000000001-DEVICE-2",
+								"description": ""
+							},
+							{
+								"key": "X-RAM-ABN",
+								"value": "10000000001",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientABN\": \"00000000001\",\n    \"ssid\": \"__bogus__\",\n    \"agencyService\": \"USI\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
