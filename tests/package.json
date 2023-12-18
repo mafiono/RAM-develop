@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {},
   "dependencies": {
-    "codelyzer": "0.0.19",
+    "codelyzer": "0.0.28",
     "faker": "^3.1.0",
     "gulp": "^3.9.1",
     "gulp-jasmine": "^2.3.0",
