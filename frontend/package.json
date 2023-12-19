@@ -40,7 +40,7 @@
     "gulp-connect": "^5.0.0",
     "gulp-filter": "4.0.0",
     "gulp-gzip": "1.4.0",
-    "gulp-ignore": "2.0.1",
+    "gulp-ignore": "2.0.2",
     "gulp-inject": "4.1.0",
     "gulp-jspm": "0.5.13",
     "gulp-rename": "1.2.2",
