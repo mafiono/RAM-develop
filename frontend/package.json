@@ -44,7 +44,7 @@
     "gulp-inject": "4.1.0",
     "gulp-jspm": "0.5.13",
     "gulp-rename": "1.2.2",
-    "gulp-rimraf": "0.2.0",
+    "gulp-rimraf": "0.2.2",
     "gulp-sass": "2.3.2",
     "gulp-sequence": "0.4.6",
     "gulp-sourcemaps": "1.6.0",
