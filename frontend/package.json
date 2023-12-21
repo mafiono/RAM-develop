@@ -54,7 +54,7 @@
     "gulp-uglify": "2.0.0",
     "http-proxy-middleware": "^0.17.1",
     "jspm": "0.16.45",
-    "main-bower-files": "2.13.1",
+    "main-bower-files": "2.13.3",
     "merge2": "1.0.2",
     "phantomjs-prebuilt": "2.1.12",
     "proxy-middleware": "0.15.0",
